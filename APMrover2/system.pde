@@ -89,7 +89,7 @@ static void init_ardupilot()
     // initialise serial ports
     serial_manager.init();
 
-    ServoRelayEvents.set_channel_mask(0xFFF0);
+    ServoRelayEvents.set_channel_mask(0xFFFF);
 
     set_control_channels();
 

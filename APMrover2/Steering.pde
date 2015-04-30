@@ -271,9 +271,9 @@ static void set_servos(void)
 #if HIL_MODE == HIL_MODE_DISABLED || HIL_SERVOS
 	// send values to the PWM timers for output
 	// ----------------------------------------
-    channel_steer->output(); 
-    channel_throttle->output();
-    RC_Channel_aux::output_ch_all();
+    //channel_steer->output(); 
+    //channel_throttle->output();
+    //RC_Channel_aux::output_ch_all();
 #endif
 }
 
