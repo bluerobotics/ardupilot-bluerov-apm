@@ -1,45 +1,40 @@
-#ArduPilot Project#
+# BlueROV APM Setup
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/diydrones/ardupilot?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+This repository is a fork of the APMRover2 code which contains modifications to allow control of an ROV or other vehicle through ROS.
 
-### The ArduPilot project is made up of: ###
->>ArduCopter (or APM:Copter) : [code](https://github.com/diydrones/ardupilot/tree/master/ArduCopter), [wiki](http://copter.ardupilot.com)
+Warning: this repository has been deprecated. Newer BlueROVs use a PixHawk with the https://github.com/bluerobotics/ardupilot repository.
 
->>ArduPlane (or APM:Plane) : [code](https://github.com/diydrones/ardupilot/tree/master/ArduPlane), [wiki](http://plane.ardupilot.com)
+## Setup
 
->>ArduRover (or APMrover2) : [code](https://github.com/diydrones/ardupilot/tree/master/APMrover2), [wiki](http://rover.ardupilot.com)
+The following install steps should work on Mac and Linux.
 
->>Antenna Tracker : [code](https://github.com/diydrones/ardupilot/tree/master/AntennaTracker), [wiki](http://copter.ardupilot.com/wiki/common-antennatracker-introduction)
+```bash
+git clone -b br-ros-rov https://github.com/bluerobotics/ardupilot-bluerov-apm.git
+cd ardupilot-bluerov-apm/APMrover2/
+make configure
+cd ..
+vim config.mk
+```
 
-### User Support & Discussion Forums ###
->>APM Forum: [http://ardupilot.com/forum/index.php](http://ardupilot.com/forum/index.php)
+At this point you may have to modify the setting in config.mk. I had to point it to my Arduino installation and change the serial port. Arduino 1.0 or greater is required.
 
->>Community Site: [http://diydrones.com](http://diydrones.com)
+```bash
+cd APMrover2
+make
+make upload
+```
 
-### Developer Information ###
->>Github repository: [https://github.com/diydrones/ardupilot](https://github.com/diydrones/ardupilot)
+## MAV Proxy to Test
 
->>Main developer wiki: [http://dev.ardupilot.com](http://dev.ardupilot.com)
+MAV Proxy lets you send messages to the APM including the set servo message.
 
->>Developer email group: drones-discuss@googlegroups.com
+```bash
+sudo pip install MAVProxy
+mavproxy.py --master=/dev/tty.usbxxxxx
+```
 
-### Contributors ###
->>[Github statistics](https://github.com/diydrones/ardupilot/graphs/contributors)
+Once started, you can set the servo with the following command:
 
-### How To Get Involved ###
->>The ArduPilot project is open source and we encourage participation and code contributions: [guidelines for contributors to the ardupilot codebase](http://dev.ardupilot.com/wiki/guidelines-for-contributors-to-the-apm-codebase)
-
->>We have an active group of Beta Testers especially for ArduCopter to help us find bugs: [release procedures](http://dev.ardupilot.com/wiki/release-procedures)
-
->>Desired Enhancements and Bugs can be posted to the [issues list](https://github.com/diydrones/ardupilot/issues).
-
->>Helping other users with log analysis on [diydrones.com](http://www.diydrones.com) and the [APM forums ](http://ardupilot.com/forum/index.php) is always appreciated:
-
->>There is a group of wiki editors as well in case documentation is your thing: ardu-wiki-editors@googlegroups.com
-
->>Developer discussions occur on drones-discuss@google-groups.com
-
-### License ###
->>[Overview of license](http://dev.ardupilot.com/wiki/license-gplv3)
-
->>[Full Text](https://github.com/diydrones/ardupilot/blob/master/COPYING.txt)
+```bash
+servo set [servo num] [microsecond signal]
+```
